@@ -9,7 +9,7 @@ class Base64Conan(ConanFile):
     name = "base64"
     version = "1.0.2"
     creator = "DEGoodmanWilson"
-    url = "https://github.com/DEGoodmanWilson/conan-base64".format(creator, name)
+    url = "https://github.com/{0}/conan-{1}".format(creator, name)
     description = "Base64 encode and decode routines by René Nyffenegger"
     license = "https://github.com/{0}/conan-{1}/blob/master/LICENSES".format(creator, name)
     exports_sources = ["CMakeLists.txt", "LICENSE"]
