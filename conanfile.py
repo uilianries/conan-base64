@@ -14,16 +14,14 @@ class Base64Conan(ConanFile):
     license = "https://github.com/{0}/conan-{1}/blob/master/LICENSES".format(creator, name)
     exports_sources = ["CMakeLists.txt", "LICENSE"]
     settings = "os", "arch", "compiler", "build_type"
-    # options = {"shared": [True, False], "build_tests": [True, False]}
-    options = {"build_tests": [True, False]}
-    # default_options = "shared=False", "build_tests=False"
-    default_options = "build_tests=False"
+    options = {"shared": [True, False], "build_tests": [True, False]}
+    default_options = "shared=False", "build_tests=False"
         
     def requirements(self):
         #use dynamic org/channel for libs in DEGoodmanWilson
         if self.options.build_tests:
             self.requires.add("gtest/1.8.0@bincrafters/stable", private=False)
-            # self.options["gtest"].shared = self.options["shared"]
+            self.options["gtest"].shared = self.options["shared"]
 
     def source(self):
         source_url = "https://github.com/{0}/{1}".format(self.creator, self.name)
