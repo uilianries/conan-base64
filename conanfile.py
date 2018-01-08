@@ -8,9 +8,10 @@ import os
 class Base64Conan(ConanFile):
     name = "base64"
     version = "1.0.2"
-    url = "https://github.com/DEGoodmanWilson/conan-base64"
+    creator = "DEGoodmanWilson"
+    url = "https://github.com/DEGoodmanWilson/conan-base64".format(creator, name)
     description = "Base64 encode and decode routines by René Nyffenegger"
-    license = "https://github.com/DEGoodmanWilson/conan-base64/blob/master/LICENSES"
+    license = "https://github.com/{0}/conan-{1}/blob/master/LICENSES".format(creator, name)
     exports_sources = ["CMakeLists.txt", "LICENSE"]
     settings = "os", "arch", "compiler", "build_type"
     options = {"shared": [True, False], "build_tests": [True, False]}
@@ -23,7 +24,7 @@ class Base64Conan(ConanFile):
             self.options["gtest"].shared = False
 
     def source(self):
-        source_url = "https://github.com/DEGoodmanWilson/base64"
+        source_url = "https://github.com/{0}/{1}".format(self.creator, self.name)
         tools.get("{0}/archive/v{1}.tar.gz".format(source_url, self.version))
         extracted_dir = self.name + "-" + self.version
         os.rename(extracted_dir, "sources")
@@ -38,7 +39,7 @@ class Base64Conan(ConanFile):
     def package(self):
         with tools.chdir("sources"):
             self.copy(pattern="LICENSE")
-            self.copy(pattern="*", dst="include", src="include")
+            self.copy(pattern="*.[h|hpp]", dst="include/{0}".format(self.name), src="sources")
             self.copy(pattern="*.dll", dst="bin", src="bin", keep_path=False)
             self.copy(pattern="*.lib", dst="lib", src="lib", keep_path=False)
             self.copy(pattern="*.a", dst="lib", src="lib", keep_path=False)
