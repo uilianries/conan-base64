@@ -8,15 +8,16 @@ import os
 class Base64Conan(ConanFile):
     name = "base64"
     version = "1.0.2"
-    creator = "DEGoodmanWilson"
-    url = "https://github.com/{0}/conan-{1}".format(creator, name)
+    generators = "cmake"
+    author = "DEGoodmanWilson"
+    url = "https://github.com/{0}/conan-{1}".format(author, name)
     description = "Base64 encode and decode routines by René Nyffenegger"
-    license = "https://github.com/{0}/conan-{1}/blob/master/LICENSES".format(creator, name)
+    license = "https://github.com/{0}/conan-{1}/blob/master/LICENSES".format(author, name)
     exports_sources = ["CMakeLists.txt", "LICENSE"]
     settings = "os", "arch", "compiler", "build_type"
     options = {"shared": [True, False], "build_tests": [True, False]}
     default_options = "shared=False", "build_tests=False"
-        
+
     def requirements(self):
         #use dynamic org/channel for libs in DEGoodmanWilson
         if self.options.build_tests:
@@ -24,7 +25,7 @@ class Base64Conan(ConanFile):
             self.options["gtest"].shared = self.options["shared"]
 
     def source(self):
-        source_url = "https://github.com/{0}/{1}".format(self.creator, self.name)
+        source_url = "https://github.com/{0}/{1}".format(self.author, self.name)
         tools.get("{0}/archive/v{1}.tar.gz".format(source_url, self.version))
         extracted_dir = self.name + "-" + self.version
         os.rename(extracted_dir, "sources")
@@ -33,7 +34,7 @@ class Base64Conan(ConanFile):
     def build(self):
         cmake = CMake(self)
         cmake.definitions["BUILD_BASE64_TESTS"] = self.options.build_tests
-        cmake.configure(source_dir="sources")
+        cmake.configure()
         cmake.build()
 
     def package(self):
