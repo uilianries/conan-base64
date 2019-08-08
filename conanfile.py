@@ -15,7 +15,7 @@ class Base64Conan(ConanFile):
     exports_sources = ["CMakeLists.txt", "LICENSE"]
     settings = "os", "arch", "compiler", "build_type"
     options = {"shared": [True, False], "build_tests": [True, False]}
-    default_options = "shared=False", "build_tests=False"
+    default_options = {'shared': False, 'build_tests': False}
         
     def requirements(self):
         #use dynamic org/channel for libs in DEGoodmanWilson
